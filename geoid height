@@ -1,3 +1,5 @@
+import requests
+
 def get_geoid_height(latitude, longitude, model='14'):
     # Construct the URL with the provided latitude, longitude, and model
     url = f"https://geodesy.noaa.gov/api/geoid/ght?lat={latitude}&lon={longitude}&model={model}"
