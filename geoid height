@@ -1,0 +1,34 @@
+def get_geoid_height(latitude, longitude, model='14'):
+    # Construct the URL with the provided latitude, longitude, and model
+    url = f"https://geodesy.noaa.gov/api/geoid/ght?lat={latitude}&lon={longitude}&model={model}"
+
+    try:
+        # Send a GET request to the URL
+        response = requests.get(url)
+        response.raise_for_status()  # Raises an exception if the request failed
+
+        # Parse the JSON response
+        data = response.json()
+
+        # Extract the geoid height from the response
+        geoid_height = data.get('geoidHeight', None)
+
+        # Check if geoid height data is available
+        if geoid_height is not None:
+            print(f"Geoid Height at ({latitude}, {longitude}): {geoid_height} meters")
+            return geoid_height
+        else:
+            print("Geoid height data not found in the response.")
+            return None
+
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred: {e}")
+        return None
+
+
+# Take latitude and longitude input from the user
+latitude = float(input("Enter latitude: "))
+longitude = float(input("Enter longitude: "))
+
+# Call the function and display the result
+get_geoid_height(latitude, longitude)
